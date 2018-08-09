@@ -14,7 +14,7 @@ void setup()
   if (Ethernet.begin(mac) == 0)    //Si devuelve error
   {
     Serial.println("No ha sido possible configurar la Ethernet por DHCP");
-    while (true; )    ;            // No sigas, quédate aquí eternamente
+    while (true );            // No sigas, quédate aquí eternamente
   }
   Serial.print("Mi direccion IP es: ");
   for (byte B = 0; B < 4; B++)
@@ -22,10 +22,9 @@ void setup()
     Serial.print(Ethernet.localIP()[B], DEC);
     Serial.print(".");
   }
-  Serial.println();
+  
 
-
-
+}
 
 
   void loop() {
