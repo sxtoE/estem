@@ -1,0 +1,11 @@
+Conections HR 911105a
+
+Arduino	     Module
+digital 12	     SO
+digital 11	     ST
+digital 13	     SCK
+digital 8	     CS
+5V			     5V
+Gnd	    		 GND
+
+
