@@ -4,3 +4,13 @@ CLK PIN 13
 SO  PIN 12
 CS	PIN 10 
 RST PIN 9
+----------------Lo de Arnaldi que si funciono : 
+
+50-SO
+51-ST
+52-SCK
+5V-5V
+GND-GND-GND
+CS-10
+
+
