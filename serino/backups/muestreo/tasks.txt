@@ -1,0 +1,7 @@
+1) Locate (0,0)
+2) Dibujar lìneas 
+3) Màximos y mìnimos de la magnitud
+4) Escalar las rectas x, y 
+
+7 dias son 168 horas, con lo cual tendrìamos desde hoy hasta hoy-168
+24 puntos por dìa, 1 punto por hora, 168 puntos por semana por gràfico. 
