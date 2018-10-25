@@ -4,11 +4,13 @@
 // Devuelve el promedio
 int uv_promedioAnalogRead(int pinToRead)
 {
-				byte NumeroLecturas = 8;
+				byte NLecturas = 8;
 				unsigned int ValorCorriente = 0; 
-				for(int x = 0 ; x < NumeroLecturas ; x++)
+        int i;
+
+				for(i = 0 ; i < NLecturas ; i++)
 								ValorCorriente += analogRead(pinToRead);
-				ValorCorriente /= NumeroLecturas;
+				ValorCorriente /= NLecturas;
 				return(ValorCorriente);  
 }
 
