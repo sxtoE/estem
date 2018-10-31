@@ -23,7 +23,10 @@ static void my_callback (byte status, word off, word len) {
 				Serial.println("...");
 }
 
-long tiempoUltimaLectura=0;; //Guarda el tiempo de la última lectura.
+int intervaloLecturas = 5000; //5s
+long t_UltimaLectura  = 0;    //Guarda el tiempo de la última lectura.
+float mq_rcero, dht_temp, dht_hume, bmp_temp, bmp_pres, bmp_presnm, uv_vout, uv_intensidad;
+int uv_Nivel, uv_refNivel;
 
 void setup()
 {
@@ -86,83 +89,97 @@ void setup()
 
 void loop()
 {
-				float r_cero, t, h;
-				int uvNivel, refNivel;
 
-				uvNivel = uv_promedioAnalogRead(UVOUT);
-				refNivel = uv_promedioAnalogRead(REF_3V3);
-				//Utilice el pin de alimentación de 3.3V como referencia para 
+				if(millis()-t_UltimaLectura>intervaloLecturas)
+				{  
+								//Primero leemos los sensores
+								readSensors();
+
+								//ethernet
+								ether.packetLoop(ether.packetReceive());
+								Serial.println();
+								Serial.print("<<< REQ ");
+								ether.browseUrl(PSTR("/foo/"), "bar", website, my_callback);
+				
+				//fin ethernet
+				t_UltimaLectura=millis(); //Se actuliza el tiempo de la ultima lectura.
+}
+}
+
+void readSensors()
+{
+				//Sensor UV
+				uv_Nivel = uv_promedioAnalogRead(UVOUT);
+				uv_refNivel = uv_promedioAnalogRead(REF_3V3);
+				//Utiliza el pin de alimentación de 3.3V como referencia para 
 				//obtener un valor de salida muy preciso del sensor
-				float outputVoltaje = 3.3 / refNivel * uvNivel;
-				float IntencidadUV = uv_mapfloat(outputVoltaje, 0.99, 2.9, 0.0, 15.0);
-				Serial.print("Voltaje Recibido: ");
-				Serial.print(IntencidadUV);
-				Serial.println();
-				Serial.print("Indice UV: ");
-				Serial.println(outputVoltaje);
-				Serial.println();
-				delay(400);
+				uv_vout = (3.3 / uv_refNivel)*uv_Nivel;
+				uv_intensidad = uv_mapfloat(uv_vout, 0.99, 2.9, 0.0, 15.0);
+				//BMP
+				bmp_temp = bmp.readTemperature();
+				bmp_pres = bmp.readPressure();
+				bmp_presnm = bmp.readSealevelPressure();
+				//MQ135
+				mq_rcero = sensorMQ.getRZero();
+				//DHT
+				dht_temp = humedad_readTemp();
+				dht_hume = humedad_readHumedad();
 
-				//barometro
+}
+
+void printDataSerial()
+{
+
+				//UV
+				Serial.print("UV Voltaje Recibido: ");
+				Serial.println(uv_vout);
+				Serial.print("UV Indice UV: ");
+				Serial.print(uv_intensidad);
+				//BMP
 				//Leemos los valores del sensor y sacamos la temperatura por el monitor serie
-				Serial.print("Temperatura = ");
-				Serial.print(bmp.readTemperature());
+				Serial.print("BMP Temperatura = ");
+				Serial.print(bmp_temp);
 				Serial.println(" *C");
 
 				//Leemos los valores del sensor y sacamos la presión atmosférica por el monitor serie    
-				Serial.print("Presión = ");
-				Serial.print(bmp.readPressure());
+				Serial.print("BMP Presión = ");
+				Serial.print(bmp_pres);
 				Serial.println(" Pa");
 
 				//Calculamos la altitud asumiendo la presión barométrica 'standard' a 1013.25 milibares
-				Serial.print("Altitud = ");
-				Serial.print(bmp.readAltitude());
-				Serial.println(" metros");
-
+				//No hace falta
+				/*Serial.print("Altitud = ");
+					Serial.print(bmp.readAltitude());
+					Serial.println(" metros");
+				 */
 				//Calculamos la presión a nivel del mar usando una función de la librería
-				Serial.print("Presión a nivel del mar (calculada) = ");
-				Serial.print(bmp.readSealevelPressure());
+				Serial.print("BMP Presión a nivel del mar (calculada) = ");
+				Serial.print(bmp_presnm);
 				Serial.println(" Pa");
 
 				//Podemos obtener una medición de la altitud aun más precisa si conocemos la presión real a nivel del mar
 				//Si es de 1015 millibars eso equivale a 101500 Pascals
-				Serial.print("Altitud real = ");
-				Serial.print(bmp.readAltitude(101500));
-				Serial.println(" metros");
-
-				Serial.println();  //Espaciado entre lecturas
-				delay(10000);      //Pausa de 10 segundos entre lecturas
+				//FIXME: ver si esto hace falta
+				/*				Serial.print("Altitud real = ");
+									Serial.print(bmp.readAltitude(101500));
+									Serial.println(" metros");
+				 */
+				//			Serial.println();  //Espaciado entre lecturas
+				//			delay(10000);      //Pausa de 10 segundos entre lecturas
 				//fin sensor barometro
 
-				//inicio sensor MQ135
-				float resistencia_cero = sensorMQ.getRZero();
-				Serial.println(resistencia_cero);
+				//MQ135
+				Serial.print("MQ135 RZ: ");
+				Serial.println(mq_rcero);
 				//fin MQ135
-
-				//ethernet
-				ether.packetLoop(ether.packetReceive());
-
-				if (millis() > timer) {
-								timer = millis() + 5000;
-								Serial.println();
-								Serial.print("<<< REQ ");
-								ether.browseUrl(PSTR("/foo/"), "bar", website, my_callback);
-				}
-				//fin ethernet
 				//humedad
-				if(millis()-tiempoUltimaLectura>2000)
-				{  
-								//Se impmprimen los valores en el monitor serial.
-t = humedad_readTemp();
-								Serial.print("Temperatura: ");
-								Serial.print(t);
-								Serial.println(" *C");
-h = humedad_readTemp();
-								Serial.print("Humedad: ");
-								Serial.print(h);
-								Serial.println(" %t");
-								tiempoUltimaLectura=millis(); //Se actuliza el tiempo de la ultima lectura.
-				}
+				//Se imprimen los valores en el monitor serial.
+				Serial.print("DHT Temperatura: ");
+				Serial.print(dht_temp);
+				Serial.println(" *C");
+				Serial.print("DHT Humedad: ");
+				Serial.print(dht_hume);
+				Serial.println(" %t");
 
 				//fin humedad
 }

@@ -29,4 +29,6 @@ const char website[] PROGMEM = "www.google.com";
 #define DHTPIN      2    //Pin de conexion.
 #define DHTTYPE     DHT22
 
+void readSensors();
+void printDataSerial();
 #endif
