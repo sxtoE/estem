@@ -6,7 +6,7 @@ float temp_readTemp() {
 				float tprom[10];
 				float temp = 0.0;
 
-				while (pos < 11) {
+				while (pos < 10) {
 								tempC = analogRead(PIN_LM35);
 								// Calculamos la temp con la fórmula
 								tempC = (5 * tempC * 100) / 1024;

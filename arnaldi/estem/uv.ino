@@ -6,7 +6,7 @@ int uv_promedioAnalogRead(int pinToRead)
 {
 				byte NLecturas = 8;
 				unsigned int ValorCorriente = 0; 
-        int i;
+				int i;
 
 				for(i = 0 ; i < NLecturas ; i++)
 								ValorCorriente += analogRead(pinToRead);
