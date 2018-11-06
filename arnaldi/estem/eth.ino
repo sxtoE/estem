@@ -10,8 +10,9 @@
  */
 #include "eth.h"
 
-void inicializarEthernetShield() {
-  Ethernet.begin(mac);
+void eth_inicializarEthernetShield() {
+  Ethernet.begin(mac,myIP);
+  //Ethernet.begin(mac);
   Serial.println("Estacion Meteorologica");
   Serial.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
   Serial.print("IP Address        : ");
@@ -24,9 +25,9 @@ void inicializarEthernetShield() {
   Serial.println(Ethernet.dnsServerIP());
 }
 
-void enviarDatos(float vi_temperatura, float vi_humedad, float vi_presion, float vi_uv, float vi_viento, float vi_lluvia, float vi_dioxido, float vi_monoxido, float vi_amoniaco) {
+void eth_enviarDatos(float vi_temperatura, float vi_humedad, float vi_presion, float vi_uv, float vi_viento, float vi_lluvia, float vi_dioxido, float vi_monoxido, float vi_amoniaco) {
   // if you get a connection, report back via serial:
-  if (client.connect(server, 80)) {//Fixme: Cambiar este puerto por el usado. 
+  if (client.connect(server, 555)) {//Fixme: Cambiar este puerto por el usado. 
     Serial.println("-> Connected");
     // Make a HTTP request:
     client.print( "GET /eth/index.php?");

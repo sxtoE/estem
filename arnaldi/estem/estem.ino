@@ -59,6 +59,7 @@ void setup()
 				//fin barometro
 
 				//ethernet
+        //Ethernet.begin(mac,myIP);
 				eth_inicializarEthernetShield(); //Función que inicializa la placa. 
 				//fin ethernet
 

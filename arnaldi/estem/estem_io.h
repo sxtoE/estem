@@ -4,6 +4,8 @@
 #include <Wire.h>           //Cargamos la librería Wire
 #include <MQ135.h>
 #include <Adafruit_BMP085.h>//Cargamos la librería BMP085
+#include <UIPEthernet.h> // Used for Ethernet
+
 #include "eth.h"
 #include "DHT.h"//Libreria a utilizar.
 #include "uv.h"
