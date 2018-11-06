@@ -4,21 +4,12 @@
 #include <Wire.h>           //Cargamos la librería Wire
 #include <MQ135.h>
 #include <Adafruit_BMP085.h>//Cargamos la librería BMP085
-#include <EtherCard.h>
+#include "eth.h"
 #include "DHT.h"//Libreria a utilizar.
 #include "uv.h"
 #include "temp.h"
 #include "humedad.h"
 #include "mq135.h"
-
-// Direccion MAC de la interfase, debe ser unica en la red LAN
-static byte mymac[] = { 0x74,0x69,0x69,0x2D,0x30,0x31 };
-
-byte Ethernet::buffer[700];
-static uint32_t timer;
-
-const char website[] PROGMEM = "www.google.com";
-//fin ethernet
 
 // Pines de control
 #define STATUS_LED  13   // Led conectado a DP, de uso general
