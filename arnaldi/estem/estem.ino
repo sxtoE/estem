@@ -34,6 +34,7 @@ float uv_intensidad = 0.0;
 float lm35_temp = 0.0;
 float v_lluvia = 0.0;
 float v_viento = 0.0;
+int   d_viento = 0;
 float mq_rs;
 float mq_ppm;
 int uv_Nivel, uv_refNivel;
@@ -45,6 +46,9 @@ void setup()
 				pinMode(REF_3V3, INPUT);
 				pinMode(MQ_PIN, INPUT);
 				pinMode(STATUS_LED, OUTPUT);
+				pinMode(VEL_VIENTO, INPUT_PULLUP);
+				pinMode(DIR_VIENTO, INPUT_PULLUP);
+
 
 				//Iniciamos la comunicación serie
 				Serial.begin(9600);
@@ -59,7 +63,7 @@ void setup()
 				//fin barometro
 
 				//ethernet
-        //Ethernet.begin(mac,myIP);
+				//Ethernet.begin(mac,myIP);
 				eth_inicializarEthernetShield(); //Función que inicializa la placa. 
 				//fin ethernet
 
@@ -68,6 +72,10 @@ void setup()
 				//Serial.println("Iniciando Lectura...");
 				dht.begin();
 				///fin humedad
+
+				attachInterrupt(digitalPinToInterrupt(VEL_VIENTO), vv_countPulses, FALLING); // Execute countPulses() if in1 Goes to GND
+				//------------------------------------
+
 }
 
 void loop()
@@ -77,11 +85,11 @@ void loop()
 				{  
 								//Primero leemos los sensores
 								readSensors();
-//debug
+								//debug
 								printDataSerial();
-//end debug
+								//end debug
 								//ethernet
-								eth_enviarDatos(dht_temp, dht_hume, bmp_pres, uv_intensidad, v_viento, v_lluvia, v_dioxido, v_monoxido, v_amoniaco); //Función que envía los datos al servidor
+								eth_enviarDatos(dht_temp, dht_hume, bmp_pres, uv_intensidad, v_viento, v_lluvia, v_dioxido, v_monoxido, v_amoniaco, d_viento); //Función que envía los datos al servidor
 
 								//fin ethernet
 								t_UltimaLectura=millis(); //Se actuliza el tiempo de la ultima lectura.
@@ -112,6 +120,10 @@ void readSensors()
 				dht_hume = humedad_readHumedad();
 				//LM35
 				lm35_temp = temp_readTemp();
+				//vel_viento
+				v_viento = vv_medirVelocidad();
+				//dir_viento
+				d_viento = dir_direccion();
 
 }
 
@@ -181,5 +193,14 @@ void printDataSerial()
 				Serial.print("LM35 Temperatura:\t ");
 				Serial.print(lm35_temp);
 				Serial.println(" *C");
+
+				//velocidad viento
+				Serial.print("VV Veloc. Viento:\t ");
+				Serial.print(v_viento);
+				Serial.println(" Km/h");
+
+				//direccion viento
+        dir_printDir();
+
 
 }

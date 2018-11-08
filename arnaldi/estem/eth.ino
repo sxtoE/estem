@@ -25,7 +25,7 @@ void eth_inicializarEthernetShield() {
   Serial.println(Ethernet.dnsServerIP());
 }
 
-void eth_enviarDatos(float vi_temperatura, float vi_humedad, float vi_presion, float vi_uv, float vi_viento, float vi_lluvia, float vi_dioxido, float vi_monoxido, float vi_amoniaco) {
+void eth_enviarDatos(float vi_temperatura, float vi_humedad, float vi_presion, float vi_uv, float vi_viento, float vi_lluvia, float vi_dioxido, float vi_monoxido, float vi_amoniaco, int dir_viento) {
   // if you get a connection, report back via serial:
   if (client.connect(server, 555)) {//Fixme: Cambiar este puerto por el usado. 
     Serial.println("-> Connected");
@@ -57,6 +57,9 @@ void eth_enviarDatos(float vi_temperatura, float vi_humedad, float vi_presion, f
     client.print("&&");
     client.print("amoniaco=");
     client.print(vi_amoniaco);
+    client.print("&&");
+    client.print("direccion=");
+    client.print(dir_viento);
     client.println( " HTTP/1.1");
     client.print( "Host: " );
     client.println(server);
