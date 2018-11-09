@@ -1,6 +1,6 @@
-#include "temp.h"
+#include "lm35.h"
 
-float temp_readTemp() {
+float lm35_readTemp() {
 				float tempC;
 				int pos = 0;
 				float tprom[10];

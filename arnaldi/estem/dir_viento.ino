@@ -7,7 +7,7 @@ int dir_readDirViento() {
 				int direccion = 0;
 
 				while (pos < 10) {
-								read_dir = analogRead(DIR_VIENTO);
+								read_dir = analogRead(PIN_DVIENTO);
 								dprom[pos] = read_dir;
 								direccion = direccion + dprom[pos];
 								pos++;
