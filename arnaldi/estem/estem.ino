@@ -11,7 +11,7 @@ Sacco Selena
  */
 #include "estem_io.h"
 
-//Adafruit_BMP085 bmp;           //Iniciamos una instancia de la librería BMP085
+Adafruit_BMP085 bmp;           //Iniciamos una instancia de la librería BMP085
 //MQ135 sensorMQ = MQ135(MQ_CAL);
 DHT dht(DHTPIN, DHTTYPE);
 //EthernetClient client;      //Iniciamos como cliente
@@ -53,13 +53,14 @@ void setup()
 				//Iniciamos la comunicación serie
 				Serial.begin(9600);
 
-				/*				Serial.println("MP8511");
+								Serial.println("MP8511");
 				//barometro
-				if (!bmp.begin()) {  //Si hay un error al iniciar la librería...
+       bmp.begin();
+				//if (!bmp.begin()) {  //Si hay un error al iniciar la librería...
 				//Mostramos un mensaje
-				Serial.println("No se puede iniciar el sensor BMP085, compruebe las conexiones!"); 
-				while (1) {} //Detenemos la ejecución
-				}*/
+				//Serial.println("No se puede iniciar el sensor BMP085, compruebe las conexiones!"); 
+				//while (1) {} //Detenemos la ejecución
+				//}
 				//fin barometro
 
 				//ethernet
@@ -106,9 +107,10 @@ void readSensors()
 				uv_vout = (3.3 / uv_refNivel)*uv_Nivel;
 				uv_intensidad = uv_mapfloat(uv_vout, 0.99, 2.9, 0.0, 15.0);
 				//BMP
-				/*				bmp_temp = bmp.readTemperature();
-									bmp_pres = bmp.readPressure();
-									bmp_presnm = bmp.readSealevelPressure();*/
+				bmp_temp = bmp.readTemperature();
+				bmp_pres = bmp.readPressure();
+        bmp_pres = bmp_pres/100.0;
+				bmp_presnm = bmp.readSealevelPressure();
 				//MQ135
 				//mq_rcero = sensorMQ.getRZero();
 				mq_rs = mq_readMQ(MQ_PIN);      // Obtener la Rs promedio
@@ -139,21 +141,21 @@ void printDataSerial()
 				Serial.println(" mW/cm^2");
 				//BMP
 				//Leemos los valores del sensor y sacamos la temperatura por el monitor serie
-				/*				Serial.print("BMP Temperatura = ");
-									Serial.print(bmp_temp);
-									Serial.println(" *C");
+				Serial.print("BMP Temperatura =\t ");
+				Serial.print(bmp_temp);
+				Serial.println(" *C");
 
 				//Leemos los valores del sensor y sacamos la presión atmosférica por el monitor serie    
-				Serial.print("BMP Presión = ");
+				Serial.print("BMP Presión =\t\t ");
 				Serial.print(bmp_pres);
-				Serial.println(" Pa");
+				Serial.println(" hPa");
 
 				//Calculamos la altitud asumiendo la presión barométrica 'standard' a 1013.25 milibares
 				//No hace falta
-				Serial.print("Altitud = ");
+				Serial.print("Altitud =\t\t ");
 				Serial.print(bmp.readAltitude());
-				Serial.println(" metros");
-				 */
+				Serial.println(" m");
+				 
 				/*
 				//Calculamos la presión a nivel del mar usando una función de la librería
 				Serial.print("BMP Presión a nivel del mar (calculada) = ");
