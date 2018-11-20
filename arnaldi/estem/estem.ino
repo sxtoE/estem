@@ -1,16 +1,25 @@
-/*
-	 Estación Meteorológica del Colegio Tecnológico del Sur 2018
+/*-----------------------------------------------------------------------------
+--	 Estación Meteorológica del Colegio Tecnológico del Sur 2018
+--
+-- Autores:
+-- 6toE - 2018 - CTS
+-- Andrade Eluney
+-- Argañaraz José
+-- Ferrada Joaquín
+-- Guevara Tobías
+-- Miranda Luciano
+-- Sacco Selena
+-- Sagaría Facundo
+-- Serino Matías
+-- Silvera Facundo
+-- 
+-- Profesor: Ing. L. Horacio Arnaldi
+-- 
+-------------------------------------------------------------------------------*/
 
-Autores:
-Andrade Eluney
-Silvera Facundo
-Serino Matías
-Guevara Tobías
-Sacco Selena
-
- */
 #include "estem_io.h"
 
+<<<<<<< HEAD
 Adafruit_BMP085 bmp;           //Iniciamos una instancia de la librería BMP085
 //MQ135 sensorMQ = MQ135(MQ_CAL);
 DHT dht(DHTPIN, DHTTYPE);
@@ -20,7 +29,11 @@ DHT dht(DHTPIN, DHTTYPE);
 float v_dioxido = 0, v_monoxido = 0, v_amoniaco = 0;
 
 
+=======
+DHT dht(PIN_DHT, DHTTYPE);
+>>>>>>> 5876fb2e0df9d006f2e0fd23b6ebfc2111e075bb
 
+float v_dioxido = 0, v_monoxido = 0, v_amoniaco = 0;
 int intervaloLecturas = 5000; //5s
 long t_UltimaLectura  = 0;    //Guarda el tiempo de la última lectura.
 float mq_rcero = 0.0;
@@ -42,12 +55,12 @@ int uv_Nivel, uv_refNivel;
 void setup()
 {
 				//configuramos pines de I/O
-				pinMode(UVOUT, INPUT);
-				pinMode(REF_3V3, INPUT);
-				pinMode(MQ_PIN, INPUT);
+				pinMode(PIN_UVOUT, INPUT);
+				pinMode(PIN_REF3V3, INPUT);
+				pinMode(PIN_MQ, INPUT);
 				pinMode(STATUS_LED, OUTPUT);
-				pinMode(VEL_VIENTO, INPUT_PULLUP);
-				pinMode(DIR_VIENTO, INPUT_PULLUP);
+				pinMode(PIN_VVIENTO, INPUT_PULLUP);
+				pinMode(PIN_DVIENTO, INPUT_PULLUP);
 
 
 				//Iniciamos la comunicación serie
@@ -74,7 +87,7 @@ void setup()
 				dht.begin();
 				///fin humedad
 
-				attachInterrupt(digitalPinToInterrupt(VEL_VIENTO), vv_countPulses, FALLING); // Execute countPulses() if in1 Goes to GND
+				attachInterrupt(digitalPinToInterrupt(PIN_VVIENTO), vv_countPulses, FALLING); // Execute countPulses() if in1 Goes to GND
 				//------------------------------------
 
 }
@@ -100,8 +113,8 @@ void loop()
 void readSensors()
 {
 				//Sensor UV
-				uv_Nivel = uv_promedioAnalogRead(UVOUT);
-				uv_refNivel = uv_promedioAnalogRead(REF_3V3);
+				uv_Nivel = uv_promedioAnalogRead(PIN_UVOUT);
+				uv_refNivel = uv_promedioAnalogRead(PIN_REF3V3);
 				//Utiliza el pin de alimentación de 3.3V como referencia para 
 				//obtener un valor de salida muy preciso del sensor
 				uv_vout = (3.3 / uv_refNivel)*uv_Nivel;
@@ -113,7 +126,7 @@ void readSensors()
 				bmp_presnm = bmp.readSealevelPressure();
 				//MQ135
 				//mq_rcero = sensorMQ.getRZero();
-				mq_rs = mq_readMQ(MQ_PIN);      // Obtener la Rs promedio
+				mq_rs = mq_readMQ(PIN_MQ);      // Obtener la Rs promedio
 				mq_ppm = mq_getConcentration(mq_rs/R0);   // Obtener la concentración
 
 
@@ -121,7 +134,7 @@ void readSensors()
 				dht_temp = humedad_readTemp();
 				dht_hume = humedad_readHumedad();
 				//LM35
-				lm35_temp = temp_readTemp();
+				lm35_temp = lm35_readTemp();
 				//vel_viento
 				v_viento = vv_medirVelocidad();
 				//dir_viento

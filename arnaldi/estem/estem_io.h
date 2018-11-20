@@ -7,10 +7,9 @@
 #include <UIPEthernet.h> // Used for Ethernet
 
 #include "eth.h"
-#include "DHT.h"//Libreria a utilizar.
-#include "uv.h"
-#include "temp.h"
 #include "humedad.h"
+#include "uv.h"
+#include "lm35.h"
 #include "mq135.h"
 #include "vel_viento.h"
 #include "dir_viento.h"
@@ -19,15 +18,12 @@
 #define STATUS_LED  13   // Led conectado a DP, de uso general
 //Entadas analogicas
 #define PIN_LM35    A0   // Variable del pin de entrada del sensor (A0)
-#define MQ_PIN      A1   //Entrada de calibracion para el sensor MQ135
-#define DIR_VIENTO  A2   //Entrada para leer la direccion del viento
-#define UVOUT       A8	 //salida del sensor UV (A8)
-#define REF_3V3     A9   //3.3V de encendido en el tablero Arduino (A9)
-#define DHTPIN      2    //Pin de conexion.
-#define DHTTYPE     DHT22
-#define VEL_VIENTO  3
-
-
+#define PIN_MQ      A1   //Entrada de calibracion para el sensor MQ135
+#define PIN_DVIENTO A2   //Entrada para leer la direccion del viento
+#define PIN_UVOUT   A3	 //salida del sensor UV (A8)
+#define PIN_REF3V3  A4   //3.3V de encendido en el tablero Arduino (A9)
+#define PIN_DHT     2    //Pin de conexion.
+#define PIN_VVIENTO 3    //Velocidad del viento
 
 void readSensors();
 void printDataSerial();
