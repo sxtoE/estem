@@ -1,0 +1,40 @@
+<html>
+    <head><script src="p5.min.js"></script>
+        <script src="p5.dom.min.js"></script>
+        <script src="p5.sound.min.js"></script>
+        <script>
+            var pg;
+            var dk; 
+            function setup() {
+            createCanvas(500, 500);
+            pg = createGraphics(100, 100);
+            dk = createGraphics(200, 500);
+            }
+            function draw() {       
+            
+            pg.background(255, 0, 0);
+            
+            image(pg, 250, 250, 13, 90);
+
+            //image(imagen, left, right, width, height);
+            /*
+            
+            
+            background(1);  // Color del background de todo el canvas
+            pg.background(100);     //Color del background del grafico pg
+            pg.noStroke();
+            pg.ellipse(pg.width / 2, pg.height / 2, 50, 50);    //Ellipse dibujado en pg
+            image(pg, 50, 50);
+            image(pg, 0, 0, 50, 50);
+
+            dk.background(155);
+            dk.noStroke();
+            dk.ellipse(dk.width / 2, pg.height /3, 80, 80);
+            image(dk, 30, 30);
+            image(dk, 0, 0, 50, 50);
+            */
+
+            }    
+            </script>
+    </head>
+</html>

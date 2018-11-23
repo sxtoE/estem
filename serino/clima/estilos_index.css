@@ -1,0 +1,154 @@
+body{
+	background-color: white; 
+	color: ;
+	height: auto;
+	width: auto;
+	margin: 0 auto;
+	min-width: 300px; 
+	min-height: 600px; 
+	max-width: 1200px; 
+	max-height: 700px; 
+
+}
+
+#contenedor{
+	background-color: ;
+	color: ;
+	font: serif;
+	margin: 0 auto;
+	width: 98%;
+	height: auto;
+	/*text-align: left;*/
+
+}
+
+#encabezado{
+	text-align: center;
+	/*border: solid 2px black;*/
+	float: left;
+	width: 100%;
+	height: auto;
+	padding: 3px; 
+}
+
+
+#imagenPresentacion{
+	width: 10%; 
+	height: auto; 
+	text-align: center;
+	float: left;
+}
+.imagenCTS{
+	height: auto;
+	width: 100%;
+	margin: 1px; 
+}
+
+#textoPresentacion{
+	width: 80%;
+	height: auto;
+	text-align: center;
+	float: left;
+
+}
+
+
+
+#derechaPresentacion{
+	width: 10%;
+	height: auto;
+	text-align: center;
+	float: left;
+}
+
+
+
+/*Aquì termina el encabezado*/
+
+#actuales{
+	width: 100%;
+	height: auto;
+	padding-top: 6%; 
+
+}
+
+table{
+	border: solid 1px black;
+	padding: 1%;
+	width: 100%;
+}
+
+th{
+	border: solid 1px black;
+	padding: 1%;
+}
+td{
+	border: solid 1px black;
+	padding: 1%;
+	border-top: none;
+	text-align: center;
+}	
+
+
+/*Aquí terminan los valores actuales*/
+
+#pronostico{
+	
+}
+
+/*Aquí termina pronóstico*/
+
+#semanal{
+	padding: 5%;
+	padding-left: 2%;
+	width: 100%;
+	height: auto;
+	float: left;
+}
+
+#SG_temperatura, #SG_presion, #SG_uv, #SG_humedad, #SG_viento, #SG_lluvia, #SG_dioxido, #SG_monoxido, #SG_amoniaco{
+	height: 30%; 
+	width: 40%;
+	background-color: black;
+	float: left;
+	margin: 1%; 
+	color: white;
+	text-align: center;
+}
+
+
+/*Aquí termina semanal*/
+
+#busq_pers{
+	padding: 5%;
+	padding-left: 2%;
+	width: 100%;
+	height: auto;
+	float: left;
+
+}
+
+#opciones{
+	padding-top: 3%; 
+	text-align: center; 
+	width: 30%;
+	height: auto;
+	
+	float: left; 	
+
+}
+
+
+#ownGraph{
+	width: 55%;
+	height: auto;
+	float: left;
+}
+
+
+
+
+
+
+
+
